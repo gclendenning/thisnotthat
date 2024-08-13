@@ -3,7 +3,14 @@ from panel.tests.conftest import get_default_port
 from panel import config
 
 CUSTOM_MARKS = ('ui')
-PORT = [get_default_port()]
+# PORT = [get_default_port()]
+
+PORT = [5006]
+
+# @pytest.fixture
+# def port():
+#     PORT[0] += 1
+#     return PORT[0]
 
 config.apply_signatures = False
 
