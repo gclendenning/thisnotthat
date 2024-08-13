@@ -102,7 +102,7 @@ stages:
           displayName: 'Run tests'
 
         - script: |
-            pytest thisnotthat/tests --ui --browser chromium -n 1 --show-capture=no -v --disable-warnings --junitxml=junit/test-results.xml --cov=thisnotthat/ --cov-report=xml --cov-report=html
+            pytest thisnotthat/tests --ui --browser chromium --slowmo 100 -n 1 --show-capture=no -v --disable-warnings --junitxml=junit/test-results.xml --cov=thisnotthat/ --cov-report=xml --cov-report=html
           displayName: 'Run UI tests'
 
         - bash: |
