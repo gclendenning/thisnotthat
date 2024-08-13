@@ -3,16 +3,16 @@ from panel.tests.conftest import get_default_port
 from panel import config
 
 CUSTOM_MARKS = ('ui')
-# PORT = [get_default_port()]
-
-PORT = [5006]
-
-# @pytest.fixture
-# def port():
-#     PORT[0] += 1
-#     return PORT[0]
-
 config.apply_signatures = False
+PORT = [get_default_port()]
+
+@pytest.fixture
+def port():
+    worker_id = os.environ.get("PYTEST_XDIST_WORKER", "0")
+    worker_count = int(os.environ.get("PYTEST_XDIST_WORKER_COUNT", "1"))
+    new_port = PORT[0] + int(re.sub(r"\D", "", worker_id))
+    PORT[0] += worker_count
+    return new_port
 
 optional_markers = {
     "ui": {
