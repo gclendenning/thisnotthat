@@ -87,15 +87,23 @@ stages:
           condition: ${{ eq(parameters.includeReleaseCandidates, true) }}
 
         - script: |
-            pip install -e .
+            pip install -e .[tests]
             pip install pytest  pytest-azurepipelines
             pip install pytest-cov
             pip install coveralls
           displayName: 'Install package'
 
-        - script: |
+        - bash: |
+            playwright install chromium
+          displayName: 'Install playwright browser'
+
+        - script: 
             pytest thisnotthat/tests --show-capture=no -v --disable-warnings --junitxml=junit/test-results.xml --cov=thisnotthat/ --cov-report=xml --cov-report=html
           displayName: 'Run tests'
+
+        - script: |
+            pytest thisnotthat/tests --ui --browser chromium -n 1 --show-capture=no -v --disable-warnings --junitxml=junit/test-results.xml --cov=thisnotthat/ --cov-report=xml --cov-report=html
+          displayName: 'Run UI tests'
 
         - bash: |
             coveralls
