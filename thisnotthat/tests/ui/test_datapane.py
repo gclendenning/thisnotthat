@@ -46,5 +46,10 @@ def test_datapane_selection(page, df_mixed):
         assert 'tabulator-selected' not in rows.nth(i).get_attribute('class')
 
     expected_selected = df_mixed.loc[[row_to_select], :]
+    print("Expected")
+    print(expected_selected)
+    print("Selected")
+    print(widget.selected_dataframe)
+    
     assert widget.selected_dataframe.equals(expected_selected)
 
